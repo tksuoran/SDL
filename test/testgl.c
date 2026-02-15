@@ -188,7 +188,9 @@ int main(int argc, char *argv[])
     state->gl_red_size = request_color_size;
     state->gl_green_size = request_color_size;
     state->gl_blue_size = request_color_size;
-    state->gl_depth_size = 16;
+    state->gl_alpha_size = 0;
+    state->gl_depth_size = 0;
+    state->gl_stencil_size = 0;
     /* For release_behavior to work, at least on Windows, you'll most likely need to set state->gl_major_version = 3 */
     /* state->gl_major_version = 3; */
     state->gl_release_behavior = 0;
