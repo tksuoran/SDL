@@ -195,6 +195,7 @@ int main(int argc, char *argv[])
     /* state->gl_major_version = 3; */
     state->gl_release_behavior = 0;
     state->gl_double_buffer = 1;
+    state->verbose = VERBOSE_VIDEO | VERBOSE_MODES;
     if (fsaa) {
         state->gl_multisamplebuffers = 1;
         state->gl_multisamplesamples = fsaa;
