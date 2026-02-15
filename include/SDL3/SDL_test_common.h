@@ -148,6 +148,8 @@ typedef struct
     int gl_minor_version;
     int gl_debug;
     int gl_profile_mask;
+    int gl_framebuffer_srgb_capable;
+    const char* hint_opengl_force_srgb_framebuffer;
 
     /* Mouse info */
     SDL_Rect confine;

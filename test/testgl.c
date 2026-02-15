@@ -74,129 +74,33 @@ static void quit(int rc)
 
 static void Render(void)
 {
-    static float color[8][3] = {
-        { 1.0, 1.0, 0.0 },
-        { 1.0, 0.0, 0.0 },
-        { 0.0, 0.0, 0.0 },
-        { 0.0, 1.0, 0.0 },
-        { 0.0, 1.0, 1.0 },
-        { 1.0, 1.0, 1.0 },
-        { 1.0, 0.0, 1.0 },
-        { 0.0, 0.0, 1.0 }
+    static float color[3][3] = {
+        { 1.0f, 0.0f, 0.0f },
+        { 0.0f, 1.0f, 0.0f },
+        { 0.0f, 0.0f, 1.0f }
     };
-    static float cube[8][3] = {
-        { 0.5, 0.5, -0.5 },
-        { 0.5, -0.5, -0.5 },
-        { -0.5, -0.5, -0.5 },
-        { -0.5, 0.5, -0.5 },
-        { -0.5, 0.5, 0.5 },
-        { 0.5, 0.5, 0.5 },
-        { 0.5, -0.5, 0.5 },
-        { -0.5, -0.5, 0.5 }
+    static float pos[8][3] = {
+        {  0.0f,  0.9f, 0.0f },
+        {  0.9f, -0.9f, 0.0f },
+        { -0.9f, -0.9f, 0.0f }
     };
 
     /* Do our drawing, too. */
     ctx.glClearColor(0.0, 0.0, 0.0, 0.0 /* used with --transparent */);
     ctx.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    ctx.glBegin(GL_QUADS);
-
-#ifdef SHADED_CUBE
-    ctx.glColor3fv(color[0]);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glColor3fv(color[1]);
-    ctx.glVertex3fv(cube[1]);
-    ctx.glColor3fv(color[2]);
-    ctx.glVertex3fv(cube[2]);
-    ctx.glColor3fv(color[3]);
-    ctx.glVertex3fv(cube[3]);
-
-    ctx.glColor3fv(color[3]);
-    ctx.glVertex3fv(cube[3]);
-    ctx.glColor3fv(color[4]);
-    ctx.glVertex3fv(cube[4]);
-    ctx.glColor3fv(color[7]);
-    ctx.glVertex3fv(cube[7]);
-    ctx.glColor3fv(color[2]);
-    ctx.glVertex3fv(cube[2]);
+    ctx.glBegin(GL_TRIANGLES);
 
     ctx.glColor3fv(color[0]);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glColor3fv(color[5]);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glColor3fv(color[6]);
-    ctx.glVertex3fv(cube[6]);
+    ctx.glVertex3fv(pos[0]);
+
     ctx.glColor3fv(color[1]);
-    ctx.glVertex3fv(cube[1]);
+    ctx.glVertex3fv(pos[1]);
 
-    ctx.glColor3fv(color[5]);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glColor3fv(color[4]);
-    ctx.glVertex3fv(cube[4]);
-    ctx.glColor3fv(color[7]);
-    ctx.glVertex3fv(cube[7]);
-    ctx.glColor3fv(color[6]);
-    ctx.glVertex3fv(cube[6]);
-
-    ctx.glColor3fv(color[5]);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glColor3fv(color[0]);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glColor3fv(color[3]);
-    ctx.glVertex3fv(cube[3]);
-    ctx.glColor3fv(color[4]);
-    ctx.glVertex3fv(cube[4]);
-
-    ctx.glColor3fv(color[6]);
-    ctx.glVertex3fv(cube[6]);
-    ctx.glColor3fv(color[1]);
-    ctx.glVertex3fv(cube[1]);
     ctx.glColor3fv(color[2]);
-    ctx.glVertex3fv(cube[2]);
-    ctx.glColor3fv(color[7]);
-    ctx.glVertex3fv(cube[7]);
-#else  /* flat cube */
-    ctx.glColor3f(1.0, 0.0, 0.0);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glVertex3fv(cube[1]);
-    ctx.glVertex3fv(cube[2]);
-    ctx.glVertex3fv(cube[3]);
-
-    ctx.glColor3f(0.0, 1.0, 0.0);
-    ctx.glVertex3fv(cube[3]);
-    ctx.glVertex3fv(cube[4]);
-    ctx.glVertex3fv(cube[7]);
-    ctx.glVertex3fv(cube[2]);
-
-    ctx.glColor3f(0.0, 0.0, 1.0);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glVertex3fv(cube[6]);
-    ctx.glVertex3fv(cube[1]);
-
-    ctx.glColor3f(0.0, 1.0, 1.0);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glVertex3fv(cube[4]);
-    ctx.glVertex3fv(cube[7]);
-    ctx.glVertex3fv(cube[6]);
-
-    ctx.glColor3f(1.0, 1.0, 0.0);
-    ctx.glVertex3fv(cube[5]);
-    ctx.glVertex3fv(cube[0]);
-    ctx.glVertex3fv(cube[3]);
-    ctx.glVertex3fv(cube[4]);
-
-    ctx.glColor3f(1.0, 0.0, 1.0);
-    ctx.glVertex3fv(cube[6]);
-    ctx.glVertex3fv(cube[1]);
-    ctx.glVertex3fv(cube[2]);
-    ctx.glVertex3fv(cube[7]);
-#endif /* SHADED_CUBE */
+    ctx.glVertex3fv(pos[2]);
 
     ctx.glEnd();
-
-    ctx.glMatrixMode(GL_MODELVIEW);
-    ctx.glRotatef(5.0, 1.0, 1.0, 1.0);
 }
 
 static void LogSwapInterval(void)
@@ -220,6 +124,11 @@ int main(int argc, char *argv[])
     Uint32 frames;
     int dw, dh;
     int swap_interval = 0;
+    int request_color_size = 8;
+    bool request_gl_framebuffer_srgb = false;
+    const char* hint_opengl_force_srgb_framebuffer = NULL;
+    int framebuffer_srgb_capable = 0;
+    int red_size = 0, green_size = 0, blue_size = 0;
 
     /* Initialize parameters */
     fsaa = 0;
@@ -245,12 +154,29 @@ int main(int argc, char *argv[])
             } else if(SDL_strcasecmp(argv[i], "--suspend-when-occluded") == 0) {
                 suspend_when_occluded = true;
                 consumed = 1;
+            } else if (SDL_strcasecmp(argv[i], "--gl-framebuffer-srgb") == 0) {
+                request_gl_framebuffer_srgb = true;
+                consumed = 1;
+            } else if (SDL_strcasecmp(argv[i], "--hint_opengl-force-srgb-framebuffer") == 0 && i + 1 < argc) {
+                hint_opengl_force_srgb_framebuffer = argv[i + 1];
+                consumed = 2;
+            } else if (SDL_strcasecmp(argv[i], "--color-size") == 0 && i + 1 < argc) {
+                request_color_size = SDL_atoi(argv[i + 1]);
+                consumed = 2;
             } else {
                 consumed = -1;
             }
         }
         if (consumed < 0) {
-            static const char *options[] = { "[--fsaa n]", "[--accel n]", "[--suspend-when-occluded]", NULL };
+            static const char *options[] = {
+                "[--fsaa n]",
+                "[--accel n]",
+                "[--color-size n]",
+                "[--suspend-when-occluded]",
+                "[--hint_opengl-force-srgb-framebuffer hint]",
+                "[--gl-framebuffer-srgb]",
+                NULL
+            };
             SDLTest_CommonLogUsage(state, argv[0], options);
             quit(1);
         }
@@ -259,9 +185,9 @@ int main(int argc, char *argv[])
 
     /* Set OpenGL parameters */
     state->window_flags |= SDL_WINDOW_OPENGL;
-    state->gl_red_size = 5;
-    state->gl_green_size = 5;
-    state->gl_blue_size = 5;
+    state->gl_red_size = request_color_size;
+    state->gl_green_size = request_color_size;
+    state->gl_blue_size = request_color_size;
     state->gl_depth_size = 16;
     /* For release_behavior to work, at least on Windows, you'll most likely need to set state->gl_major_version = 3 */
     /* state->gl_major_version = 3; */
@@ -273,6 +199,12 @@ int main(int argc, char *argv[])
     }
     if (accel >= 0) {
         state->gl_accelerated = accel;
+    }
+    if (request_gl_framebuffer_srgb >= 1) {
+        state->gl_framebuffer_srgb_capable = 1;
+    }
+    if (hint_opengl_force_srgb_framebuffer != NULL) {
+        state->hint_opengl_force_srgb_framebuffer = hint_opengl_force_srgb_framebuffer;
     }
 
     if (!SDLTest_CommonInit(state)) {
@@ -314,18 +246,23 @@ int main(int argc, char *argv[])
     SDL_Log("Extensions    : %s", ctx.glGetString(GL_EXTENSIONS));
     SDL_Log("%s", "");
 
-    if (SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value)) {
-        SDL_Log("SDL_GL_RED_SIZE: requested %d, got %d", 5, value);
+    if (SDL_GL_GetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, &framebuffer_srgb_capable)) {
+        SDL_Log("SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: requested %d, got %d", request_gl_framebuffer_srgb, framebuffer_srgb_capable);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get SDL_GL_RED_SIZE: %s", SDL_GetError());
     }
-    if (SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &value)) {
-        SDL_Log("SDL_GL_GREEN_SIZE: requested %d, got %d", 5, value);
+    if (SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &red_size)) {
+        SDL_Log("SDL_GL_RED_SIZE: requested %d, got %d", request_color_size, red_size);
+    } else {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get SDL_GL_RED_SIZE: %s", SDL_GetError());
+    }
+    if (SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &green_size)) {
+        SDL_Log("SDL_GL_GREEN_SIZE: requested %d, got %d", request_color_size, green_size);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get SDL_GL_GREEN_SIZE: %s", SDL_GetError());
     }
-    if (SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &value)) {
-        SDL_Log("SDL_GL_BLUE_SIZE: requested %d, got %d", 5, value);
+    if (SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &blue_size)) {
+        SDL_Log("SDL_GL_BLUE_SIZE: requested %d, got %d", request_color_size, blue_size);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get SDL_GL_BLUE_SIZE: %s", SDL_GetError());
     }
@@ -367,12 +304,14 @@ int main(int argc, char *argv[])
     /* Set rendering settings */
     ctx.glMatrixMode(GL_PROJECTION);
     ctx.glLoadIdentity();
-    ctx.glOrtho(-2.0, 2.0, -2.0, 2.0, -20.0, 20.0);
     ctx.glMatrixMode(GL_MODELVIEW);
     ctx.glLoadIdentity();
     ctx.glEnable(GL_DEPTH_TEST);
     ctx.glDepthFunc(GL_LESS);
     ctx.glShadeModel(GL_SMOOTH);
+    if ((request_gl_framebuffer_srgb >= 1) && (framebuffer_srgb_capable >= 1)) {
+        ctx.glEnable(GL_FRAMEBUFFER_SRGB);
+    }
 
     /* Main render loop */
     frames = 0;

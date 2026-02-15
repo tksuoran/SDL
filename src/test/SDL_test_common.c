@@ -682,6 +682,8 @@ SDLTest_CommonState *SDLTest_CommonCreateState(char **argv, SDL_InitFlags flags)
     state->gl_retained_backing = 1;
     state->gl_accelerated = -1;
     state->gl_debug = 0;
+    state->gl_framebuffer_srgb_capable = 0;
+    state->hint_opengl_force_srgb_framebuffer = NULL;
 
     state->common_argparser.parse_arguments = SDLTest_CommonStateParseCommonArguments;
     state->common_argparser.finalize = SDLTest_CommonArgParserFinalize;
@@ -1198,6 +1200,12 @@ bool SDLTest_CommonInit(SDLTest_CommonState *state)
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_RELEASE_BEHAVIOR, state->gl_release_behavior);
         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, state->gl_multisamplebuffers);
         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, state->gl_multisamplesamples);
+        if (state->gl_framebuffer_srgb_capable) {
+            SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, state->gl_framebuffer_srgb_capable);
+        }
+        if (state->hint_opengl_force_srgb_framebuffer != NULL) {
+            SDL_SetHint(SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER, state->hint_opengl_force_srgb_framebuffer);
+        }
         if (state->gl_accelerated >= 0) {
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,
                                 state->gl_accelerated);
