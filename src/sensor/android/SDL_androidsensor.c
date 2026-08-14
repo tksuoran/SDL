@@ -28,6 +28,7 @@
 #include "SDL_androidsensor.h"
 #include "../SDL_syssensor.h"
 #include "../SDL_sensor_c.h"
+#include "../../core/android/SDL_android.h"
 #include "../../thread/SDL_systhread.h"
 
 #ifndef LOOPER_ID_USER
@@ -137,7 +138,17 @@ static bool SDL_ANDROID_SensorInit(void)
     int i, sensors_count;
     ASensorList sensors;
 
+#if __ANDROID_API__ >= 26
+    // ASensorManager_getInstance() is deprecated since API 26; the
+    // replacement wants the package name of the calling app.
+    {
+        char *package_name = SDL_GetAndroidPackageName();
+        SDL_sensor_manager = ASensorManager_getInstanceForPackage(package_name);
+        SDL_free(package_name);
+    }
+#else
     SDL_sensor_manager = ASensorManager_getInstance();
+#endif
     if (!SDL_sensor_manager) {
         return SDL_SetError("Couldn't create sensor manager");
     }
